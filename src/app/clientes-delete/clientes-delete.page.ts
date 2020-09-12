@@ -34,25 +34,9 @@ export class ClientesDeletePage implements OnInit {
     })
   }
 
-
-  //MÉTODO NORMAL
-
-  // excluir() {
-  //  this.firestore.collection('cliente').doc(this.cliente.id).delete().then(() => {
-  // this.navCtrl.navigateRoot(['/clientes']);
-  // })
-  //}
-
-
-    //TENTAVIDA DE MÉTODO DESACOPLADO (NÃO FUNCIONA)
-
-  excluir(id : string) {
-    this.clientServ.excluir2(id);
+  excluir(id: string) {
+    this.clientServ.excluir(this.cliente.id).subscribe(data => {
       this.navCtrl.navigateRoot('clientes');
-    
+    })
   }
-
-
-
-
 }

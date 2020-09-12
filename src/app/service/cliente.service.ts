@@ -30,24 +30,16 @@ export class ClienteService {
       (this.collection).doc(id).snapshotChanges();
   }
 
-  
-
-atualizar(cliente : Cliente, id : string){
-  this.firestore.collection(this.collection)
-  .doc(id).update(id)
-  .catch((error : any) =>{
-    console.log(error);
-  })
-}
-
-  excluir(id: string): Promise<void> {
-    return this.firestore.doc(`cliente/${id}`).delete();
+  atualizar(id: string, dados: any): Observable<any> {
+    const observable =
+      from(this.firestore.collection('cliente').doc(id).set(dados));
+    return observable;
   }
 
-  excluir2(id: string){
-     this.firestore.doc(`cliente/${id}`).delete().catch(data=>{
-       this.excluir;
-     });
+  excluir(id: string): Observable<any> {
+    const observable =
+      from(this.firestore.collection('cliente').doc(`${id}`).delete());
+    return observable;
   }
 
 

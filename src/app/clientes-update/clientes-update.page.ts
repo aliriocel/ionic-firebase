@@ -26,33 +26,32 @@ export class ClientesUpdatePage implements OnInit {
   }
 
   ngOnInit() {
-  }
-
-  iniciarForm() {
-    this.formGroup = this.formBuilder.group({
-      nome: ['', [Validators.required, Validators.minLength(5)]],
-      cpf: ['', [Validators.required, Validators.minLength(5)]],
-      telefone: ['', [Validators.required, Validators.minLength(5)]],
-      email: ['', [Validators.required, Validators.minLength(5)]],
-      endereco: ['', [Validators.required, Validators.minLength(5)]]
-    })
-  }
-
-  atualizar() {
-    this.route.paramMap.subscribe(resp => {
-      let id = resp.get('id');
-      this.firestore.collection('cliente').doc(id).set(this.formGroup.value).then(() => {
-        this.template.myAlert('Atualizado com sucesso');
-      }).catch(() => {
-        this.template.myAlert('Erro ao Atualizar');
+    this.route.paramMap.subscribe(url => {
+      let id = url.get('id');
+      this.clientServ.buscaPorId(id).subscribe(data => {
+        this.cliente = data.payload.data();
+        this.cliente.id = data.payload.id as string;
+        this.iniciarForm();
       })
     })
   }
 
+  iniciarForm() {
+    this.formGroup = this.formBuilder.group({
+      nome: [this.cliente.nome, [Validators.required, Validators.minLength(5)]],
+      cpf: [this.cliente.cpf, [Validators.required, Validators.minLength(5)]],
+      telefone: [this.cliente.telefone, [Validators.required, Validators.minLength(5)]],
+      email: [this.cliente.email, [Validators.required, Validators.minLength(5)]],
+      endereco: [this.cliente.endereco, [Validators.required, Validators.minLength(5)]]
+    })
+  }
 
-  //Tentativa de fazer o método Desacoplado
-  //atualizar(cliente, id){
-  //this.clientServ.atualizar(cliente,id);
-  //}
+  atualizar() {
+
+    this.clientServ.atualizar(this.cliente.id, this.formGroup.value).subscribe(data => {
+      console.log(data);
+      this.template.myAlert('Atualizado com sucesso');
+    })
+  }
 
 }
