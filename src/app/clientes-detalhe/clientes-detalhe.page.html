@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Dados do cliente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form>
+
+    <ion-item>
+      <ion-label position="floating">Nome</ion-label>
+      <ion-input type="text" value="{{cliente.nome}}" disable="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Endereco</ion-label>
+      <ion-input type="text" value="{{cliente.endereco}}" disable="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">E-mail</ion-label>
+      <ion-input type="text" value="{{cliente.email}}" disable="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">CPF</ion-label>
+      <ion-input type="text" value="{{cliente.cpf}}" disable="true"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Telefone</ion-label>
+      <ion-input type="text" value="{{cliente.telefone}}" disable="true"></ion-input>
+    </ion-item>
+
+   <ion-button expand="full" (click)="atualizar(cliente)" color="warning">Atualizar</ion-button>
+   <ion-button expand="full" (click)="excluir(cliente)" color="danger">Excluir</ion-button>
+  
+
+  </form>
+
+</ion-content>

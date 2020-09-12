@@ -1,7 +1,8 @@
 {
   "name": "firebase-proj",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular"
 }
