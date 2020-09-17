@@ -1,0 +1,26 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>clientes-foto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+ 
+  <img *ngIf="foto" [src]="foto">
+  
+  <ion-button (click)="enviar()" *ngIf="foto" expand="full">Enviar</ion-button>
+
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+
+    <ion-fab-button (click)="tirarFoto()">
+      <ion-icon name="camera"></ion-icon>
+    </ion-fab-button>
+
+   
+
+  </ion-fab>
+
+</ion-content>

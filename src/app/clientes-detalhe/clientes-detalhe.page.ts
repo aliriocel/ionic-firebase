@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { ClienteService } from '../service/cliente.service';
 import { Cliente } from '../model/cliente';
 import { NavController } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/storage';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-clientes-detalhe',
@@ -11,30 +13,48 @@ import { NavController } from '@ionic/angular';
 })
 export class ClientesDetalhePage implements OnInit {
 
-  cliente : Cliente = new Cliente();
+  cliente: Cliente = new Cliente();
+  imagem: any = null;
+
   constructor(
-    private route : ActivatedRoute,
+    private route: ActivatedRoute,
     private clientServ: ClienteService,
-    private navCtrl : NavController
+    private navCtrl: NavController,
+    private fireStorage: AngularFireStorage
   ) { }
 
   ngOnInit() {
-    this.route.paramMap.subscribe(url=>{
+    this.route.paramMap.subscribe(url => {
       let id = url.get('id');
-      this.clientServ.buscaPorId(id).subscribe(data=>{
+      this.clientServ.buscaPorId(id).subscribe(data => {
         this.cliente = data.payload.data();
         this.cliente.id = data.payload.id as string;
         console.log(this.cliente);
+        this.downloadImage();
       })
     })
   }
 
-  atualizar(clienteObj){
-    this.navCtrl.navigateForward(['clientes-update',clienteObj.id]);
+  atualizar(clienteObj) {
+    this.navCtrl.navigateForward(['clientes-update', clienteObj.id]);
   }
 
-  excluir(clienteObj){
-    this.navCtrl.navigateForward(['clientes-delete',clienteObj.id]);
+  excluir(clienteObj) {
+    this.navCtrl.navigateForward(['clientes-delete', clienteObj.id]);
   }
 
+  foto() {
+    this.navCtrl.navigateForward(['/clientes-foto', this.cliente.id]);
+  }
+
+  downloadImage() {
+    let ref = this.fireStorage.storage.ref()
+      .child(`perfil/${this.cliente.id}.jpg`);
+    ref.getDownloadURL().then(url => {
+      this.imagem = url;
+    }, err => {
+      this.imagem = 'https://barcarena.pa.gov.br/portal/img/perfil/padrao.jpg';
+
+    });
+  }
 }

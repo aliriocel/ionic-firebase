@@ -49,6 +49,12 @@ const routes: Routes = [
     loadChildren: () => import('./logoff/logoff.module').then( m => m.LogoffPageModule),
     canActivate : [AngularFireAuthGuard],
     data : {authGuardPipe : redirectToLogin}
+  },
+  {
+    path: 'clientes-foto/:id',
+    loadChildren: () => import('./clientes-foto/clientes-foto.module').then( m => m.ClientesFotoPageModule),
+    canActivate : [AngularFireAuthGuard],
+    data : {authGuardPipe : redirectToLogin}
   }
 ];
 

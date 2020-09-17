@@ -10,6 +10,13 @@
 </ion-header>
 
 <ion-content>
+
+  <ion-item *ngIf="imagem">
+    <img [src]="imagem" width="100%">
+  </ion-item>
+  
+  <ion-button expand="full" (click)="foto()">Mudar Foto</ion-button>
+
   <form>
 
     <ion-item>

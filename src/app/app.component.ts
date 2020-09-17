@@ -19,9 +19,10 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Novo Cliente',
-      url: 'clientes-novo',
+      url: '/clientes-novo',
       icon: 'paper-plane'
     },
+   
     {
       title: 'Sair',
       url: '/logoff',
