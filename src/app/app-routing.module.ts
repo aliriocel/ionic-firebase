@@ -55,6 +55,14 @@ const routes: Routes = [
     loadChildren: () => import('./clientes-foto/clientes-foto.module').then( m => m.ClientesFotoPageModule),
     canActivate : [AngularFireAuthGuard],
     data : {authGuardPipe : redirectToLogin}
+  },
+  {
+    path: 'maps',
+    loadChildren: () => import('./maps/maps.module').then( m => m.MapsPageModule)
+  },
+  {
+    path: 'maps-geolocation',
+    loadChildren: () => import('./maps-geolocation/maps-geolocation.module').then( m => m.MapsGeolocationPageModule)
   }
 ];
 

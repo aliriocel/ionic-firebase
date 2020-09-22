@@ -3,9 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable, from, observable } from 'rxjs';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
-import { DomSanitizer } from '@angular/platform-browser';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { UtilService } from './util.service';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
 
 
 @Injectable({
@@ -21,8 +23,11 @@ export class ClienteService {
   constructor(private http: HttpClient,
     private firestore: AngularFirestore,
     private camera: Camera,
-    private util : UtilService,
-    private fireStorage : AngularFireStorage,) { }
+    private fireStorage : AngularFireStorage,
+    private fileChooser: FileChooser,
+    private file: File,
+    private webview : WebView,
+    private util : UtilService) { }
 
   cadastrar(obj: any): Observable<any> {
     const observable =
@@ -69,6 +74,31 @@ export class ClienteService {
     }, (err) => {
       observe.error(err);
     })
+  });
+
+  obterFotoArquivo = new Observable((observe)=>{
+    this.fileChooser.open({"mime":"image/jpeg"}).then(uri=>{
+
+      this.file.resolveLocalFilesystemUrl(uri).then((data : any)=>{
+ 
+       //amostra a foto na tela
+       observe.next(this.webview.convertFileSrc(data.nativeURL));
+ 
+       // Ler o arquivo a partir da uri gerado pelo resolveLocalFilesystemUrl
+       data.file(file=>{
+ 
+         var reader = new FileReader();
+         reader.onloadend = (encodedFile : any)=>{
+           var fileFinal = encodedFile.target.result;
+           this.fotoBlob = fileFinal;           
+           //Envia a imagem para o firebase
+         // this.fotoBlob = this.util.dataUriToBlob(fileFinal);    
+         }
+         reader.readAsDataURL(file);
+       });     
+       // Fim ler arquivo 
+      }).catch(e=>observe.next(e));
+     })
   })
 
   uploadFoto(nome): Observable<any> {

@@ -8,19 +8,23 @@
 </ion-header>
 
 <ion-content>
- 
+
   <img *ngIf="foto" [src]="foto">
-  
-  <ion-button (click)="enviar()" *ngIf="foto" expand="full">Enviar</ion-button>
+
+  <ion-item *ngIf="foto">
+    <ion-button (click)="enviarFoto()">Enviar</ion-button>
+  </ion-item>
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
-
     <ion-fab-button (click)="tirarFoto()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
+  </ion-fab>
 
-   
-
+  <ion-fab vertical="bottom" horizontal="left" slot="fixed">
+    <ion-fab-button (click)="obterFoto()">
+      <ion-icon name="book"></ion-icon>
+    </ion-fab-button>
   </ion-fab>
 
 </ion-content>

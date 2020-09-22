@@ -14,11 +14,12 @@ export class ClientesFotoPage implements OnInit {
 
   cliente: Cliente = new Cliente();
   foto: any = null;
+  fotoBlob: any = null;
 
   constructor(private clienteServ: ClienteService,
     private route: ActivatedRoute,
-    private clientServ: ClienteService,
-    private  navCtrl : NavController) { }
+    private navCtrl: NavController,
+  ) { }
 
   ngOnInit() {
 
@@ -26,15 +27,9 @@ export class ClientesFotoPage implements OnInit {
 
       let id = url.get('id');
 
-      this.clienteServ.buscaPorId(id).subscribe(data => {
-        this.cliente = data.payload.data();
-        this.cliente.id = id;
-        this.tirarFoto();
-      }, err => {
-        this.navCtrl.navigateRoot(['/clientes']);
-      })
+      this.cliente.id = id;
 
-    });
+    })
   }
 
   tirarFoto() {
@@ -43,14 +38,32 @@ export class ClientesFotoPage implements OnInit {
     })
   }
 
+  obterFoto() {
+    this.clienteServ.obterFotoArquivo.subscribe(data => {
+      this.foto = data;
+    })
+  }
+
   enviarFoto() {
     this.clienteServ.uploadFoto(this.cliente.id).subscribe(data => {
       console.log("Enviado");
-      this.navCtrl.navigateBack(['clientes-detalhe',this.cliente.id]);
+      this.navCtrl.navigateBack(['clientes-detalhe', this.cliente.id])
     }, err => {
       console.log(err);
-    }
-    );
+    })
+
+    /*
+        this.fireStorage.storage.ref().child(`/perfil/${this.cliente.id}.jpg`).put(this.fotoBlob).then(data=>{
+    
+        });*/
+
+
   }
+
+
+
+
+
+
 }
 

@@ -15,7 +15,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { Camera } from '@ionic-native/camera/ngx';
 import { UtilService } from './service/util.service';
 import { AngularFireStorageModule } from '@angular/fire/storage';
-
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +38,10 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
     SplashScreen,
     Camera,
     UtilService,
+    FileChooser,
+    File,
+    WebView,
+    Geolocation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

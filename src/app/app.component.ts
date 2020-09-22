@@ -22,6 +22,18 @@ export class AppComponent implements OnInit {
       url: '/clientes-novo',
       icon: 'paper-plane'
     },
+
+    {
+      title: 'Maps',
+      url: '/maps',
+      icon: 'paper-plane'
+    },
+
+    {
+      title: 'Localização',
+      url: '/maps-geolocation',
+      icon: 'paper-plane'
+    },
    
     {
       title: 'Sair',
